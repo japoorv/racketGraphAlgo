@@ -2,6 +2,9 @@
 (require racket/set)
 (require data/heap)
 (struct graph (node adj_list weights) #:mutable)
+
+;; DATA STRUCTURE ;;
+;;;;;;;;;;;;;;;;;;;;;
 (provide initialize_graph)
 (define (initialize_graph)
   (graph empty (make-hash) (make-hash))
@@ -17,6 +20,7 @@
   (hash-set! (hash-ref! (graph-weights grph) u (make-hash)) v w)
   (hash-set! (hash-ref! (graph-weights grph) v (make-hash)) u w)
   )
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide displn)
 (define (displn a)
   (display a)
@@ -25,7 +29,7 @@
 (define (get_weight grph u v)
   (hash-ref (hash-ref (graph-weights grph) u) v)
   )
-(define (getVal hash key) ; change getVal
+(define (getVal hash key)
   (hash-ref hash key)
   )
 (define (setVal hash key val)
@@ -34,10 +38,9 @@
 (define (comp x y)
   (<= (car x) (car y))
   )
-(define (heap-empty? heap)
-  (= 0 (heap-count heap))
-  )
-(define inf 20000000000) ; define inf 'inf 
+;; DJIKSTRA'S ALGORITHM ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define inf 20000000000) ; define inf 'inf as a large value
 (define (djikstra grph u v)
   (let ([isVisited (make-hash (map (lambda (x) (cons x 'notvisited)) (graph-node grph)))] 
         [distance (make-hash (map (lambda (x) (if (equal? x u) (cons x 0) (cons x inf))) (graph-node grph)))]
@@ -68,7 +71,8 @@
    (getVal (djikstra grph src dst) dst)
    )
    )
-(provide print_graph)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(provide print_graph) ; Utility for printing the graph : First the nodes are printed, then the adjacency List and finally the weights of the edges are returned 
 (define (print_graph grph)
   (display "\nNodes: ")
   (display (graph-node grph))
