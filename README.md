@@ -1,7 +1,7 @@
 # racketGraphAlgo
-A Basic Graph Data Structure along with shortest path algorithm (Djikstra) in Racket
+A Basic Graph Data Structure along with shortest path algorithm (Dijkstra) in Racket
 
-1) The code is a basic Graph Data Structure along with implementation of Djikstra's Algorithm in Racket. 
+1) The code is a basic Graph Data Structure along with implementation of Dijkstra's Algorithm in Racket. 
 2) The Graph is represented as 
     * List of nodes 
             accessible via graph-node <graph_name>
