@@ -38,6 +38,11 @@
 (define (comp x y)
   (<= (car x) (car y))
   )
+(define (heap-empty? heap)
+  (cond
+    [(= 0 (heap-count heap)) #t] ;; hoping that heap-count is constant time
+    [else #f]
+    ))
 ;; DJIKSTRA'S ALGORITHM ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (define inf 20000000000) ; define inf 'inf as a large value
@@ -54,7 +59,7 @@
                 (cond
                   [(equal? 'visited (hash-ref isVisited (cdr top))) (void)]
                   [else
-                   (set-for-each (hash-ref (graph-adj_list grph) (cdr top))
+                   (set-for-each (hash-ref! (graph-adj_list grph) (cdr top) (mutable-set))
                    (lambda (x) 
                           (cond
                             [(< (+ (getVal distance (cdr top)) (get_weight grph (cdr top) x)) (getVal distance x))
