@@ -35,7 +35,7 @@
 (define (setVal hash key val)
   (hash-set! hash key val)
   )
-(define (comp x y)
+(define (<=? x y)
   (<= (car x) (car y))
   )
 (define (heap-empty? heap)
@@ -45,11 +45,11 @@
     ))
 ;; DJIKSTRA'S ALGORITHM ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(define inf 20000000000) ; define inf 'inf as a large value
+(define inf "inf") ; define inf 'inf as a large value
 (define (djikstra grph u v)
   (let ([isVisited (make-hash (map (lambda (x) (cons x 'notvisited)) (graph-node grph)))] 
         [distance (make-hash (map (lambda (x) (if (equal? x u) (cons x 0) (cons x inf))) (graph-node grph)))]
-        [minHeap (make-heap comp)]) 
+        [minHeap (make-heap <=?)]) 
     (heap-add! minHeap (cons (getVal distance u) u))
     (define (check)
       (cond
@@ -57,15 +57,16 @@
         [else (let ([top (heap-min minHeap)])
                 (heap-remove-min! minHeap)
                 (cond
-                  [(equal? 'visited (hash-ref isVisited (cdr top))) (void)]
+                  [(equal? 'visited (hash-ref isVisited (cdr top))) (check)]
                   [else
+                   (setVal isVisited (cdr top) 'visited)
                    (set-for-each (hash-ref! (graph-adj_list grph) (cdr top) (mutable-set))
                    (lambda (x) 
                           (cond
-                            [(< (+ (getVal distance (cdr top)) (get_weight grph (cdr top) x)) (getVal distance x))
+                            [(or (equal? (getVal distance x) "inf") (< (+ (getVal distance (cdr top)) (get_weight grph (cdr top) x)) (getVal distance x)))
                               (setVal distance x (+ (getVal distance (cdr top)) (get_weight grph (cdr top) x)))(heap-add! minHeap (cons (getVal distance x) x))]
                              ))
-                        ) (setVal isVisited (cdr top) 'visited) (check)]) (void))])) (check) distance
+                        ) (check)]) (void))])) (check) distance
       ) 
   ) 
 (provide shortest_path)
@@ -73,7 +74,7 @@
    (let ([distance (djikstra grph src dst)])
      (display "All distances :")
      (displn distance)
-   (getVal (djikstra grph src dst) dst)
+   (list distance (getVal (djikstra grph src dst) dst))
    )
    )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -87,4 +88,3 @@
   (display "\nWeights: ")
   (displn (graph-weights grph)) 
   )  
-
