@@ -17,3 +17,4 @@ A Basic Graph Data Structure along with shortest path algorithm (Dijkstra) in Ra
 5) Some test cases have also been provided. Note the syntax of adding nodes, edges in the graph. The code could thus be reused
    without any change as long as the graph is modeled correctly (according to implementation as in testcases) and the syntax of insertion and querying is
    kept right.
+**Benchmarks/analysis has some benchmarks. Refer Readme.md there **
