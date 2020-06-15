@@ -61,22 +61,22 @@
                   [else
                    (setVal isVisited (cdr top) 'visited)
                    (set-for-each (hash-ref! (graph-adj_list grph) (cdr top) (mutable-set))
-                   (lambda (x) 
-                          (cond
-                            [(or (equal? (getVal distance x) "inf") (< (+ (getVal distance (cdr top)) (get_weight grph (cdr top) x)) (getVal distance x)))
-                              (setVal distance x (+ (getVal distance (cdr top)) (get_weight grph (cdr top) x)))(heap-add! minHeap (cons (getVal distance x) x))]
-                             ))
-                        ) (check)]) (void))])) (check) distance
-      ) 
+                                 (lambda (x) 
+                                   (cond
+                                     [(or (equal? (getVal distance x) "inf") (< (+ (getVal distance (cdr top)) (get_weight grph (cdr top) x)) (getVal distance x)))
+                                      (setVal distance x (+ (getVal distance (cdr top)) (get_weight grph (cdr top) x)))(heap-add! minHeap (cons (getVal distance x) x))]
+                                     ))
+                                 ) (check)]) (void))])) (check) distance
+    ) 
   ) 
 (provide shortest_path)
- (define (shortest_path grph src dst)
-   (let ([distance (djikstra grph src dst)])
-     (display "All distances :")
-     (displn distance)
-   (list distance (getVal (djikstra grph src dst) dst))
-   )
-   )
+(define (shortest_path grph src dst)
+  (let ([distance (djikstra grph src dst)])
+    ;;(display "All distances :")
+    ;;(displn distance)
+    distance
+    )
+  )
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (provide print_graph) ; Utility for printing the graph : First the nodes are printed, then the adjacency List and finally the weights of the edges are returned 
 (define (print_graph grph)
