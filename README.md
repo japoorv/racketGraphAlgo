@@ -18,4 +18,5 @@ A Basic Graph Data Structure along with shortest path algorithm (Dijkstra) in Ra
    without any change as long as the graph is modeled correctly (according to implementation as in testcases) and the syntax of insertion and querying is
    kept right.
 
+**Note: The algo currently finds the single source shortest path length from the source to every other node. It can be easily modified for getting the distance between src,dst without traversing the whole graph**
 **Benchmarks/analysis has some benchmarks. Refer Readme.md there**
